@@ -1,5 +1,5 @@
 import time
-import app
+import SkillSync.authentication_and_signup as authentication_and_signup
 
 def dashboard():
 
@@ -19,9 +19,9 @@ def dashboard():
     time.sleep(1.5)
 
     if opts[choice] == "Log in":
-        app.authenticate_email()
+        authentication_and_signup.authenticate_email()
     elif opts[choice] == "Sign Up":
-        app.create_account()
+        authentication_and_signup.create_account()
     else:
         print("Enter valid option")
 
@@ -30,7 +30,7 @@ def dashboard():
 
 def main():
     dashboard()
-    app
+    authentication_and_signup
 
 if __name__ == "__main__":
     main()
