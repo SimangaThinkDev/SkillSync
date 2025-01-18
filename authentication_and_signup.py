@@ -3,6 +3,7 @@ import time
 from key import firebase
 from database import update_dashboard, add_user_to_db
 from dashboard import dashboard
+from pwinput import pwinput
 # "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():
@@ -36,7 +37,7 @@ def authenticate_email():
     print("WELCOME TO LOGIN PAGE\n\n")
     time.sleep(1.5)
     email = input("Enter your Username: ")
-    password = input("Enter your password: ")
+    password = pwinput("Enter your password: ")
     try:
         auth.sign_in_with_email_and_password(email, password)
 
@@ -94,8 +95,8 @@ def create_account():
         name = input("Name(s): ").title()
         surname = input("Surname: ").title()
         email = input("Enter your email: ")
-        password = input("Enter your password: ")
-        confirm = input("Confirm your password: ")
+        password = pwinput("Enter your password: ")
+        confirm = pwinput("Confirm your password: ")
         age = int(input("Age: "))
         print()
         print("Possible Campuses:")
