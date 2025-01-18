@@ -1,5 +1,5 @@
 import time
-import SkillSync.authentication_and_signup as authentication_and_signup
+import authentication_and_signup
 
 def dashboard():
 
@@ -30,7 +30,6 @@ def dashboard():
 
 def main():
     dashboard()
-    authentication_and_signup
 
 if __name__ == "__main__":
     main()
