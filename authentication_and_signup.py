@@ -1,7 +1,8 @@
 import pyrebase
 import time
 from key import firebase
-from database import update_dashboard
+
+
 
 
 """
@@ -21,7 +22,7 @@ def authenticate_email():
     password = input("Enter your password: ")
     try:
         auth.sign_in_with_email_and_password(email, password)
-        print(f"Welcome back to Skillsync {email}"), update_dashboard()
+        print(f"Welcome back to Skillsync {email}")
     except:
         print("Account or Email does not exist")
 
