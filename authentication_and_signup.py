@@ -2,7 +2,7 @@ import pyrebase
 import time
 from key import firebase
 from database import update_dashboard, add_user_to_db
-
+# "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():
 
@@ -39,20 +39,30 @@ def authenticate_email():
     try:
         auth.sign_in_with_email_and_password(email, password)
         print(f"Welcome back to Skillsync {email}\n")
-        
-        
-        print("How can we help you?")
-        dashboard_options = ["Update my information"]
-        [print(i+1, option) for i, option in enumerate(dashboard_options)]
-        choice = int(input("Choose: ")) -1
-        while True:
-            if dashboard_options[choice] == "Update my information":
-                update_dashboard()
-            elif choice + 1 == 0:
-                print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
 
     except:
         print("Account or Email does not exist")
+
+    print("How can we help you?")
+    dashboard_options = ["Update my information"]
+    [print(i+1, option) for i, option in enumerate(dashboard_options)]
+    while True:
+        try:
+            choice = int(input("Choose: [0 to exit]")) -1
+            break
+        except ValueError:
+            print("Please enter a valid option: ")
+
+
+    if dashboard_options[choice] == "Update my information":
+        update_dashboard()
+    elif choice + 1 == 0:
+        print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
+    else:
+        print("Invalid Input ")
+
+
+
 
 def create_account():
     """
