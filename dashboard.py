@@ -3,11 +3,10 @@ import authentication_and_signup
 
 def dashboard():
 
-    print("WELCOME TO SKILLSYNC\n\n")
     time.sleep(1.5)
-    print("SKILLSYNC")
+    print("\nSKILLSYNC")
 
-    opts = ["Log in", "Sign Up"]
+    opts = ["Log in", "Sign Up", "Exit"]
     for i, opt in enumerate(opts):
         print(i + 1, opt)
     while True:
@@ -22,13 +21,16 @@ def dashboard():
         authentication_and_signup.authenticate_email()
     elif opts[choice] == "Sign Up":
         authentication_and_signup.create_account()
+    elif opts[choice] == "Exit":
+        print("🫂 Thanks Bye 🫂")
     else:
-        print("Enter valid option")
+        print("🙇‍♂️ Enter valid option 🙇‍♂️")
 
 
 
 
 def main():
+    print("WELCOME TO SKILLSYNC\n")
     dashboard()
 
 if __name__ == "__main__":

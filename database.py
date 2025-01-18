@@ -47,14 +47,15 @@ def update_dashboard():
         print("Make sure you don't forget again cause I don't have the time for this")
         print("Your user id is:",user_id)
         update_dashboard()
-        #TODO: Validate if the user ID really exists
-    # 
-
 
 
     user_input = input("Do you want to continue? (yes/no): ")
     if user_input.lower() == "yes":
-        update_db(user_id)
+        if user_exists(user_id):
+            update_db(user_id)
+        else:
+            print("!User Id Does Not Exist!")
+            update_dashboard()
     else:
         print("🫶🏾 Thank you for using SkillSync 🫶🏾")
         return
@@ -74,6 +75,26 @@ def update_db(user_id):
     new_data = input(f"Enter new {values[choice]} ")
     db.child(f"{role}s").child(f"{role} id> {user_id}").update({values[choice]: new_data})
     print("Information Updated Successfully")
+
+
+
+def user_exists(userid:str = "innocent"):
+    db = firebase.database()
+
+    students = db.child("Students").get()
+    mentors = db.child("Mentors").get()
+
+    for student in students:
+        # Clean Up student Information from the Database as it's written as "Student id> exampleid"
+        student = student.key().removeprefix("Student id> ")
+        if userid == student:
+            return True
+    for mentor in mentors:
+        mentor = mentor.key().removeprefix("Mentor id> ")
+        if userid == mentor:
+            return True
+    else:
+        return False
 
 
 

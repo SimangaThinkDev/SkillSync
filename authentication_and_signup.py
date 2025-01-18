@@ -2,18 +2,19 @@ import pyrebase
 import time
 from key import firebase
 from database import update_dashboard, add_user_to_db
+from dashboard import dashboard
 # "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():
 
     roles = ["Student", "Mentor"]
 
-    for i, each_role in enumerate(roles):
-        print(i+1, each_role)
+    print("\nRoles:")
+    [print("    ", i + 1, each_role) for i, each_role in enumerate(roles)]
     
     while True:
         try:
-            choice = (int(input("\nPlease Select role: ")) - 1)
+            choice = (int(input("Please Select role: ")) - 1)
             break
         except:
             print("Please enter a Valid Role Number")
@@ -38,28 +39,45 @@ def authenticate_email():
     password = input("Enter your password: ")
     try:
         auth.sign_in_with_email_and_password(email, password)
+
+        #Now Get the data about the user, it should be a dictionary
+
+
+
         print(f"Welcome back to Skillsync {email}\n")
+        print("How can we help you?")
+        dashboard_options = ["Update my information", "Bookings"]
+        [print(i+1, option) for i, option in enumerate(dashboard_options)]
+        while True:
+            try:
+                choice = int(input("Choose: [0 to exit]")) -1
+                break
+            except ValueError:
+                print("Please enter a valid option: ")
+                authenticate_email()
+
+        if dashboard_options[choice] == "Update my information":
+            update_dashboard()
+        elif dashboard_options[choice] == "Bookings":
+            print("\n\nWelcome to the Bookings Console")
+            # TODO: This whole code block
+            if "s" == "Student":
+                print("This is All of your booked sessions:")
+                # TODO: Use The Google cal api here
+            else:
+                print("This is all the sessions you've been booked for:")
+                # TODO: Use The google cal api here aswell
+        elif choice + 1 == 0:
+            print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
+        else:
+            print("Invalid Input ")
 
     except:
         print("Account or Email does not exist")
+        print("\nRedirecting to Home Page\n")
+    dashboard()
+        
 
-    print("How can we help you?")
-    dashboard_options = ["Update my information"]
-    [print(i+1, option) for i, option in enumerate(dashboard_options)]
-    while True:
-        try:
-            choice = int(input("Choose: [0 to exit]")) -1
-            break
-        except ValueError:
-            print("Please enter a valid option: ")
-
-
-    if dashboard_options[choice] == "Update my information":
-        update_dashboard()
-    elif choice + 1 == 0:
-        print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
-    else:
-        print("Invalid Input ")
 
 
 
@@ -68,7 +86,7 @@ def create_account():
     """
     Email Sign-Up
     """
-    print("WELCOME TO SIGN UP PAGE\n\n")
+    print("\n\nWELCOME TO SIGN UP PAGE\n\n")
     auth = firebase.auth()
     time.sleep(1.5)
     
@@ -80,8 +98,11 @@ def create_account():
         confirm = input("Confirm your password: ")
         age = int(input("Age: "))
         print()
-        [print(i + 1) for i, campus in enumerate(["cpt", "jhb"])]
-        camp_choice = int(input("Select your campus: "))
+        print("Possible Campuses:")
+        campuses = ["cpt", "jhb"]
+        [print("    ", i + 1, campus) for i, campus in enumerate(campuses)]
+        camp_choice = int(input("Select your campus: ")) - 1
+        camp_choice = campuses[camp_choice]
         role = role_picker()
         if password == confirm:
             auth.create_user_with_email_and_password(email, password)
@@ -90,7 +111,7 @@ def create_account():
             break
         else:
             print("Passwords do not match\nTry Again\n")
-    
+
     signup_dict = {
         "Name(s)": name,
         "Surname": surname,
