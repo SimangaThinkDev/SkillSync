@@ -1,5 +1,6 @@
 import pyrebase
 from key import firebase
+import time
 
 """
 DataBase
@@ -23,22 +24,11 @@ def role_picker():
 
 
 
-def add_user_to_db():
+def add_user_to_db(data:dict):
     db = firebase.database()
 
-    email = input("Email: ")
-    name = input("Name(s): ").title()
-    surname = input("Surname: ").title()
-    age = int(input("Age: "))
-    role = role_picker()
-
-    # Create the data that you want to upload
-    data = {
-        "Name(s)": name,
-        "Surname": surname,
-        "Age": age,
-        "Role": role,
-    }
+    email = data["Email"]
+    role = data["Role"]
 
     mail_name = email.split("@")[0]
 
@@ -49,19 +39,24 @@ def update_dashboard():
 
     user_id = input("Enter User Id, type 0 if forgotten: ")
     if user_id.strip() == "0":
-        print("mxm, why you forget the id tho!\n Worry not I'm here for you")
+        print("BRAIN ERROR: 🧠Brain Not Found")
+        time.sleep(1)
+        print("mxm, why you forget the id tho!\n Worry not I'm here for you ")
         email = input("Enter Email [🙏, may it be correct]: ")
-        user_id = email.split("@")[0] or print("Please Try again", update_db())
+        user_id = email.split("@")[0]
         print("Make sure you don't forget again cause I don't have the time for this")
         print("Your user id is:",user_id)
         update_dashboard()
         #TODO: Validate if the user ID really exists
     # 
+
+
+
     user_input = input("Do you want to continue? (yes/no): ")
     if user_input.lower() == "yes":
         update_db(user_id)
     else:
-        print("Thank you for using SkillSync")
+        print("🫶🏾 Thank you for using SkillSync 🫶🏾")
         return
 
 
@@ -78,6 +73,7 @@ def update_db(user_id):
     choice = int(input("\nchoose: ")) - 1
     new_data = input(f"Enter new {values[choice]} ")
     db.child(f"{role}s").child(f"{role} id> {user_id}").update({values[choice]: new_data})
+    print("Information Updated Successfully")
 
 
 
