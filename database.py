@@ -1,6 +1,7 @@
 import pyrebase
 from key import firebase
 import time
+from clear import clear
 
 """
 DataBase
@@ -40,12 +41,14 @@ def update_dashboard():
     user_id = input("Enter User Id, type 0 if forgotten: ")
     if user_id.strip() == "0":
         print("BRAIN ERROR: 🧠Brain Not Found")
+        time.sleep(.5)
+        clear()
         time.sleep(1)
         print("mxm, why you forget the id tho!\n Worry not I'm here for you ")
         email = input("Enter Email [🙏, may it be correct]: ")
         user_id = email.split("@")[0]
         print("Make sure you don't forget again cause I don't have the time for this")
-        print("Your user id is:",user_id)
+        print("Your new user id is:",user_id)
         update_dashboard()
 
 

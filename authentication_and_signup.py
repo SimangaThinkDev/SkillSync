@@ -1,4 +1,5 @@
-import pyrebase
+from clear import clear
+import pyrebase, sys
 import time
 from key import firebase
 from database import update_dashboard, add_user_to_db
@@ -38,44 +39,46 @@ def authenticate_email():
     time.sleep(1.5)
     email = input("Enter your Username: ")
     password = pwinput("Enter your password: ")
+    clear()
     try:
         auth.sign_in_with_email_and_password(email, password)
 
-        #Now Get the data about the user, it should be a dictionary
-
-
-
-        print(f"Welcome back to Skillsync {email}\n")
-        print("How can we help you?")
-        dashboard_options = ["Update my information", "Bookings"]
-        [print(i+1, option) for i, option in enumerate(dashboard_options)]
-        while True:
-            try:
-                choice = int(input("Choose: [0 to exit]")) -1
-                break
-            except ValueError:
-                print("Please enter a valid option: ")
-                authenticate_email()
-
-        if dashboard_options[choice] == "Update my information":
-            update_dashboard()
-        elif dashboard_options[choice] == "Bookings":
-            print("\n\nWelcome to the Bookings Console")
-            # TODO: This whole code block
-            if "s" == "Student":
-                print("This is All of your booked sessions:")
-                # TODO: Use The Google cal api here
-            else:
-                print("This is all the sessions you've been booked for:")
-                # TODO: Use The google cal api here aswell
-        elif choice + 1 == 0:
-            print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
-        else:
-            print("Invalid Input ")
-
     except:
-        print("Account or Email does not exist")
+        print("Wrong Email or Password, Sign Up Maybe?")
         print("\nRedirecting to Home Page\n")
+        clear()
+        dashboard()
+
+
+    print(f"Welcome back to Skillsync {email}\n")
+    print("How can we help you?")
+    dashboard_options = ["Update my information", "Bookings"]
+    [print(i+1, option) for i, option in enumerate(dashboard_options)]
+    while True:
+        try:
+            choice = int(input("Choose: [0 to exit]")) -1
+            break
+        except ValueError:
+            print("Please enter a valid option: ")
+            authenticate_email()
+    clear()
+    if dashboard_options[choice] == "Update my information":
+        update_dashboard()
+    elif choice + 1 == 0:
+        print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
+        sys.exit()
+    elif dashboard_options[choice] == "Bookings":
+        print("\n\nWelcome to the Bookings Console")
+        # TODO: This whole code block
+        if "s" == "Student":
+            print("This is All of your booked sessions:")
+            # TODO: Use The Google cal api here
+        else:
+            print("This is all the sessions you've been booked for:")
+                # TODO: Use The google cal api here aswell
+    else:
+        print("Invalid Input ")
+
     dashboard()
         
 

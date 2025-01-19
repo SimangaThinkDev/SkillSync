@@ -1,5 +1,6 @@
 import time
 import authentication_and_signup
+from clear import clear
 
 def dashboard():
 
@@ -16,6 +17,7 @@ def dashboard():
         except ValueError:
             print("Please Enter A Valid Option")
     time.sleep(1.5)
+    clear()
 
     if opts[choice] == "Log in":
         authentication_and_signup.authenticate_email()
@@ -23,6 +25,8 @@ def dashboard():
         authentication_and_signup.create_account()
     elif opts[choice] == "Exit":
         print("🫂 Thanks Bye 🫂")
+        time.sleep(1.5)
+        clear()
     else:
         print("🙇‍♂️ Enter valid option 🙇‍♂️")
 
