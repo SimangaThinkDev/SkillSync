@@ -34,6 +34,7 @@ def dashboard():
 
 
 def main():
+    clear()
     print("WELCOME TO SKILLSYNC\n")
     dashboard()
 

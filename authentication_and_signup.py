@@ -85,7 +85,6 @@ def authenticate_email():
 
 
 
-
 def create_account():
     """
     Email Sign-Up
@@ -93,7 +92,7 @@ def create_account():
     print("\n\nWELCOME TO SIGN UP PAGE\n\n")
     auth = firebase.auth()
     time.sleep(1.5)
-    
+
     while True:
         name = input("Name(s): ").title()
         surname = input("Surname: ").title()
@@ -108,10 +107,11 @@ def create_account():
         camp_choice = int(input("Select your campus: ")) - 1
         camp_choice = campuses[camp_choice]
         role = role_picker()
+        clear()
         if password == confirm:
             auth.create_user_with_email_and_password(email, password)
             print("\nYou have been signed up")
-            print(f"Welcome to SkillSync {email}\n")
+            print(f"Welcome to SkillSync {email.split("@")[0]}\n")
             break
         else:
             print("Passwords do not match\nTry Again\n")
