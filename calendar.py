@@ -35,5 +35,6 @@ def main():
         print("An Error Occurred:", e)
     return creds
 
-# if __name__ == "__main__":
-    # get_events(main())
+if __name__ == "__main__":
+    main()
+    
