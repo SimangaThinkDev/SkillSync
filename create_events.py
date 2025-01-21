@@ -1,15 +1,19 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from to_datetime import convert_to_datetime
+from valid_booking_time import is_valid_booking_time
 from datetime import datetime
 
 def create_event(creds):
+    """
+    I have no words
+    """
 
     # let's create our timezone variable
     timezone = "Africa/Johannesburg"
-    summary = input("Specify the topic that will be handled during this session")
-    location = input("jhb or cpt?")
-    description = input("Mentor Session or Peer Session?")
+    summary = input("Specify the topic that will be handled during this session: ")
+    location = input("jhb or cpt?: ")
+    description = input("Mentor Session or Peer Session?: ")
     print("Please specify the booking time below: \n")
     year = int(input("Please enter the year you're booking in: "))
     month = input("Enter the month you're booking in: ")
@@ -24,6 +28,7 @@ def create_event(creds):
         } # The generated start date in datetime format
     start = f"{start["year"]}-{start["month"]}-{start["day"]}T{start["hour"]}:{start["mins"]}:{start["secs"]}Z"
     print("When is your session going to end?: \n")
+
     end = {
         "year" : year,
         "month" : month,
@@ -59,9 +64,16 @@ def create_event(creds):
             ],
             "attendees" : [attendees]
         }
-
-        event = service.events().insert(calendarId = "primary", body = event).execute()
-        print(f"Session created: {event.get('htmlLink')}")
+        # Calling two modules into action, the first module(inner -> convert_to_datetime), takes our string of the date and formats it
+        # so the second function(outer -> is_valid_booking_time) can deal with comparing the date if it's during a valid time
+        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(start)):
+            event = service.events().insert(calendarId = "primary", body = event).execute()
+            print(f"Session created: {event.get('htmlLink')}")
+        
+        #Prompt the user to sign out or try creating another event
+        print()
+        [print((_ + 1), opt) for _, opt in enumerate(["Create Another Event", "Sign Out", "Exit"])]
+        choice = int(input("Select your next destination: "))
     
     except HttpError as Err:
         print("An Error Occured:", Err)
