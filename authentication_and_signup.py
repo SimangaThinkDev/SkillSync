@@ -1,5 +1,5 @@
 from clear import clear
-import pyrebase, sys
+import sys, pyrebase
 import time
 from key import firebase
 from database import update_dashboard, add_user_to_db

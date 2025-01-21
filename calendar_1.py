@@ -1,6 +1,7 @@
 # Main Code will go here
 import datetime
 import os.path
+from create_events import create_event
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -36,5 +37,5 @@ def main():
     return creds
 
 if __name__ == "__main__":
-    main()
+    create_event(main())
     
