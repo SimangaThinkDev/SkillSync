@@ -52,7 +52,7 @@ def authenticate_email():
 
     print(f"Welcome back to Skillsync {email}\n")
     print("How can we help you?")
-    dashboard_options = ["Update my information", "Bookings"]
+    dashboard_options = ["Update my information", "Make Bookings"]
     [print(i+1, option) for i, option in enumerate(dashboard_options)]
     while True:
         try:

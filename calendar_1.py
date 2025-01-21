@@ -2,6 +2,7 @@
 import datetime
 import os.path
 from create_events import create_event
+from clear import clear
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -37,5 +38,15 @@ def main():
     return creds
 
 if __name__ == "__main__":
-    create_event(main())
-    
+    clear()
+    queries = ["Create Booking", "Get Bookings"]
+    [print(query) for query in queries]
+    query = int(input("What would you like to do: ")) - 1
+    print("WELCOME TO THE BOOKINGS CONSOLE")
+
+    if queries[query] == "Create Booking":
+        clear()
+        create_event(creds = main())
+    elif queries[query] == "Get Bookings":
+        clear()
+        pass
