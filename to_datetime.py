@@ -17,4 +17,4 @@ def convert_to_datetime(date= '2025-01-22T10:00:00Z') -> datetime:
     
     return datetime(year, mon, day, hr, min, sec)
 
-# convert_to_datetime()
+print(convert_to_datetime())

@@ -3,8 +3,9 @@ from googleapiclient.errors import HttpError
 from to_datetime import convert_to_datetime
 from valid_booking_time import is_valid_booking_time
 from datetime import datetime
+from conflicting_events import is_conflicting
 
-def create_event(creds):
+def create_event(creds, existing):
     """
     I have no words
     """
@@ -64,9 +65,10 @@ def create_event(creds):
             ],
             "attendees" : [attendees]
         }
+        booking = (start, end)
         # Calling two modules into action, the first module(inner -> convert_to_datetime), takes our string of the date and formats it
         # so the second function(outer -> is_valid_booking_time) can deal with comparing the date if it's during a valid time
-        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(start)):
+        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(start)) and is_conflicting(booking, existing):
             event = service.events().insert(calendarId = "primary", body = event).execute()
             print(f"Session created: {event.get('htmlLink')}")
         

@@ -2,6 +2,7 @@
 import datetime
 import os.path
 from create_events import create_event
+from get_events import get_events
 from clear import clear
 
 from google.auth.transport.requests import Request
@@ -46,7 +47,9 @@ if __name__ == "__main__":
 
     if queries[query] == "Create Booking":
         clear()
-        create_event(creds = main())
+        existing = get_events(main())
+        create_event(main(), existing)
     elif queries[query] == "Get Bookings":
         clear()
+        print(get_events(creds = main()))
         pass

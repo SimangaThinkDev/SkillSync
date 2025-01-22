@@ -11,7 +11,7 @@ def get_events(creds):
 
         event_result = service.events().list(calendarId = "primary",
                                             timeMin = now,
-                                            maxResults = 1,
+                                            maxResults = 10,
                                             singleEvents = True,
                                             orderBy = "startTime"
                                             ).execute()
@@ -21,11 +21,17 @@ def get_events(creds):
             print("No Upcoming Events Found!")
             return
         
+        sessions = []
+
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
-            print(start, event["summary"])
+            end = event["end"].get("dateTime", event["end"].get("date"))
+            sessions.append((start, end))
 
-        print("This is events: \n",events)
+        # print("This is events: \n",events)
 
     except HttpError as Err:
         print("An Error Occured:", Err)
+    return sessions
+
+# print(get_events())
