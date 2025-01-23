@@ -5,6 +5,7 @@ from key import firebase
 from database import update_dashboard, add_user_to_db
 from dashboard import dashboard
 from pwinput import pwinput
+from password_validator import is_password_secure
 # "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():
@@ -47,12 +48,12 @@ def authenticate_email():
         print("Wrong Email or Password, Sign Up Maybe?")
         print("\nRedirecting to Home Page\n")
         clear()
-        dashboard()
+        # dashboard()
 
 
     print(f"Welcome back to Skillsync {email}\n")
     print("How can we help you?")
-    dashboard_options = ["Update my information", "Make Bookings"]
+    dashboard_options = ["Update my information", "Make Bookings", "Exit"]
     [print(i+1, option) for i, option in enumerate(dashboard_options)]
     while True:
         try:
@@ -64,9 +65,6 @@ def authenticate_email():
     clear()
     if dashboard_options[choice] == "Update my information":
         update_dashboard()
-    elif choice + 1 == 0:
-        print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
-        sys.exit()
     elif dashboard_options[choice] == "Bookings":
         print("\n\nWelcome to the Bookings Console")
         # TODO: This whole code block
@@ -76,6 +74,9 @@ def authenticate_email():
         else:
             print("This is all the sessions you've been booked for:")
                 # TODO: Use The google cal api here aswell
+    elif dashboard_options[choice] == "Exit":
+        print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
+        sys.exit()
     else:
         print("Invalid Input ")
 
@@ -102,19 +103,20 @@ def create_account():
         age = int(input("Age: "))
         print()
         print("Possible Campuses:")
-        campuses = ["cpt", "jhb"]
+        campuses = ["JHB", "CPT"]
         [print("    ", i + 1, campus) for i, campus in enumerate(campuses)]
         camp_choice = int(input("Select your campus: ")) - 1
         camp_choice = campuses[camp_choice]
         role = role_picker()
         clear()
-        if password == confirm:
+        if password == confirm and is_password_secure(password):
             auth.create_user_with_email_and_password(email, password)
             print("\nYou have been signed up")
-            print(f"Welcome to SkillSync {email.split("@")[0]}\n")
+            print(f"🫂  Welcome to SkillSync Mr/Mrs {surname} 🫂\nYour new username is: {email.split("@")[0]}\n")
             break
         else:
-            print("Passwords do not match\nTry Again\n")
+            print("Passwords do not match or Password is not strong enough\nTrying Again")
+            create_account()
 
     signup_dict = {
         "Name(s)": name,
@@ -127,3 +129,4 @@ def create_account():
 
     # add the data to the firebase database
     add_user_to_db(signup_dict)
+    dashboard()
