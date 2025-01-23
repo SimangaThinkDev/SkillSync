@@ -1,11 +1,6 @@
-from clear import clear
-import sys, pyrebase
-import time
-from key import firebase
 from database import update_dashboard, add_user_to_db
 from dashboard import dashboard
-from pwinput import pwinput
-from password_validator import is_password_secure
+from tools import *
 # "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():

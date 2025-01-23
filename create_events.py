@@ -1,9 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from to_datetime import convert_to_datetime
-from valid_booking_time import is_valid_booking_time
 from datetime import datetime
-from conflicting_events import is_conflicting
+from tools import *
 
 def create_event(creds, existing):
     """
@@ -39,7 +37,13 @@ def create_event(creds, existing):
         "secs" : 0
         } # The generated end date in datetime format
     end = f"{end["year"]}-{end["month"]}-{end["day"]}T{end["hour"]}:{end["mins"]}:{end["secs"]}Z"
-    attendees = input("the emails of attendees: ") # The mentor Booked and the students to attend
+    i = 1
+    attendees = []
+    while i != "0":
+        i = input("the emails of attendees: [Enter zero when done]") # The mentor Booked and the students to attend
+        attendees.append(i)
+        
+
 
     try:
         service = build("calendar", "v3", credentials = creds)
@@ -63,7 +67,7 @@ def create_event(creds, existing):
             "recurrence" : [
                 "RRULE:FREQ=DAILY;COUNT=1"
             ],
-            "attendees" : [attendees]
+            "attendees" : attendees
         }
         booking = (start, end)
         # Calling two modules into action, the first module(inner -> convert_to_datetime), takes our string of the date and formats it

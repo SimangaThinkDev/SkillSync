@@ -1,8 +1,7 @@
 import pyrebase
 from key import firebase
 import time
-from clear import clear
-
+from tools import *
 """
 DataBase
 """

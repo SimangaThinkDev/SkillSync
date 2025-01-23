@@ -3,7 +3,7 @@ import datetime
 import os.path
 from create_events import create_event
 from get_events import get_events
-from clear import clear
+from tools import *
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials

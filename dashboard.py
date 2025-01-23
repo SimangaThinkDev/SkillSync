@@ -1,7 +1,6 @@
 import time
 import authentication_and_signup
-from clear import clear
-
+from tools import *
 def dashboard():
 
     time.sleep(1.5)
