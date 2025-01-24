@@ -14,11 +14,11 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar"] #Avoid using read only because we want to affect the calendar
 
-def main():
+def initiate_calendar():
     creds = None
 
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json")
+    if os.path.exists("secrets/token.json"):
+        creds = Credentials.from_authorized_user_file("secrets/token.json")
 
     #If we don't have credentials or if the creds are invalid
     if not creds or not creds.valid:
@@ -27,10 +27,10 @@ def main():
             creds.refresh(Request())
 
         else:
-          flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+          flow = InstalledAppFlow.from_client_secrets_file("secrets/credentials.json", SCOPES)
           creds = flow.run_local_server(port = 0)
 
-        with open("token.json", "w") as token:
+        with open("secrets/token.json", "w") as token:
             token.write(creds.to_json())
     try:
         service = build("calendar", "v3", credentials=creds)
@@ -47,9 +47,8 @@ if __name__ == "__main__":
 
     if queries[query] == "Create Booking":
         clear()
-        existing = get_events(main())
-        create_event(main(), existing)
+        existing = get_events(initiate_calendar())
+        create_event(initiate_calendar(), existing)
     elif queries[query] == "Get Bookings":
         clear()
-        print(get_events(creds = main()))
-        pass
+        get_events(creds = initiate_calendar())

@@ -5,6 +5,7 @@ from tools import *
 """
 DataBase
 """
+db = firebase.database()
 
 def role_picker():
 
@@ -25,7 +26,6 @@ def role_picker():
 
 
 def add_user_to_db(data:dict):
-    db = firebase.database()
 
     email = data["Email"]
     role = data["Role"]
@@ -64,8 +64,7 @@ def update_dashboard():
 
 
 def update_db(user_id):
-    db = firebase.database()
-
+    
     role = role_picker()
 
     print("What would you like to update: \n")
@@ -81,7 +80,6 @@ def update_db(user_id):
 
 
 def user_exists(userid:str = "innocent"):
-    db = firebase.database()
 
     students = db.child("Students").get()
     mentors = db.child("Mentors").get()
@@ -98,6 +96,13 @@ def user_exists(userid:str = "innocent"):
     else:
         return False
 
+
+def available(role):
+
+    students = db.child("Students").get().val()
+
+    for key, value in students.items():
+        print(value["Name(s)"])
 
 
 def main():

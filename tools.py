@@ -64,7 +64,7 @@ def is_valid_booking_time(start_time):
     """Check if the event falls on Monday to Friday between 07:00 and 17:00."""
     
     # Check if the day is between Monday (0) and Friday (4)
-    if start_time.weekday() < 5:  # Weekdays (Monday to Friday)
+    if start_time.weekday() < 6:  # Weekdays (Monday to Friday)
         # Check if the time is between 07:00 and 17:00 (5 PM)
         if start_time.hour >= 7 and start_time.hour < 17:
             return True

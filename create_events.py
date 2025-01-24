@@ -2,6 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from datetime import datetime
 from tools import *
+from database import available
 
 def create_event(creds, existing):
     """
@@ -38,11 +39,20 @@ def create_event(creds, existing):
         } # The generated end date in datetime format
     end = f"{end["year"]}-{end["month"]}-{end["day"]}T{end["hour"]}:{end["mins"]}:{end["secs"]}Z"
     i = 1
+    print()
+    booking_with = ["Mentor", "Student"]
+    [print(j + 1, _) for j, _ in enumerate(booking_with)]
+    booking_choice = int(input("\nWho are you booking with?: ")) - 1
+    print("Available Mentors: ")
+    available(booking_with[booking_choice])
     attendees = []
-    while i != "0":
-        i = input("the emails of attendees: [Enter zero when done]") # The mentor Booked and the students to attend
-        attendees.append(i)
-        
+    z = True
+    while z:
+        try:    
+            i = input("the emails of attendees: [Enter zero when done]") # The mentor Booked and the students to attend
+            attendees.append(i)
+        except KeyboardInterrupt:
+            z = False
 
 
     try:
@@ -72,7 +82,7 @@ def create_event(creds, existing):
         booking = (start, end)
         # Calling two modules into action, the first module(inner -> convert_to_datetime), takes our string of the date and formats it
         # so the second function(outer -> is_valid_booking_time) can deal with comparing the date if it's during a valid time
-        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(start)) and is_conflicting(booking, existing):
+        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(end)):
             event = service.events().insert(calendarId = "primary", body = event).execute()
             print(f"Session created: {event.get('htmlLink')}")
         

@@ -1,6 +1,9 @@
-from database import update_dashboard, add_user_to_db
+from database import *
 from dashboard import dashboard
 from tools import *
+from create_events import create_event
+from calendar_1 import initiate_calendar
+from get_events import print_events, get_events
 # "👽👾🤖🎃🫶🏾🧠🫂🙇‍♂️👨‍🍼👊👑🚧📥📤🐙🐝🐐"
 
 def role_picker():
@@ -24,31 +27,35 @@ def role_picker():
 Create an Authentication Object
 """
 
+auth = firebase.auth()
 def authenticate_email():
     """
     Authentication of email
     """
 
-    auth = firebase.auth()
 
     print("WELCOME TO LOGIN PAGE\n\n")
     time.sleep(1.5)
     email = input("Enter your Username: ")
     password = pwinput("Enter your password: ")
+
     clear()
     try:
         auth.sign_in_with_email_and_password(email, password)
-
+        print(f"Welcome back to Skillsync {email}\n")
+        login_console(email, password)
     except:
         print("Wrong Email or Password, Sign Up Maybe?")
         print("\nRedirecting to Home Page\n")
         clear()
-        # dashboard()
+        dashboard()
 
 
-    print(f"Welcome back to Skillsync {email}\n")
+def login_console(sign_in_info):
+    email, password = sign_in_info
+
     print("How can we help you?")
-    dashboard_options = ["Update my information", "Make Bookings", "Exit"]
+    dashboard_options = ["Update my information", "Make Bookings", "View Bookings", "Exit"]
     [print(i+1, option) for i, option in enumerate(dashboard_options)]
     while True:
         try:
@@ -60,20 +67,22 @@ def authenticate_email():
     clear()
     if dashboard_options[choice] == "Update my information":
         update_dashboard()
-    elif dashboard_options[choice] == "Bookings":
+    elif dashboard_options[choice] == "Make Bookings":
         print("\n\nWelcome to the Bookings Console")
-        # TODO: This whole code block
-        if "s" == "Student":
-            print("This is All of your booked sessions:")
-            # TODO: Use The Google cal api here
-        else:
-            print("This is all the sessions you've been booked for:")
-                # TODO: Use The google cal api here aswell
+        create_event(initiate_calendar(), get_events(initiate_calendar()))
+    elif dashboard_options[choice] == "View Bookings":
+        print("\n\nWelcome to the Bookings Console")
+        print_events(initiate_calendar())
+
     elif dashboard_options[choice] == "Exit":
         print("Thanks for visiting SkillSync, Pay Us a Visit again soon")
+        print("🫂 Thanks Bye 🫂")
+        time.sleep(1.5)
+        clear()
         sys.exit()
     else:
         print("Invalid Input ")
+        login_console()
 
     dashboard()
         
@@ -86,7 +95,6 @@ def create_account():
     Email Sign-Up
     """
     print("\n\nWELCOME TO SIGN UP PAGE\n\n")
-    auth = firebase.auth()
     time.sleep(1.5)
 
     while True:
@@ -119,7 +127,8 @@ def create_account():
         "Email": email, 
         "Age": age,
         "Role": role,
-        "Campus": camp_choice
+        "Campus": camp_choice,
+        "Email" : email
     }
 
     # add the data to the firebase database
