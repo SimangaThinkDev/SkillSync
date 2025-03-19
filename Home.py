@@ -22,4 +22,3 @@ WELCOME TO SKILLSYNC
     
 if __name__ == "__main__":
     main()
-    
