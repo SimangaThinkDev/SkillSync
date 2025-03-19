@@ -8,7 +8,6 @@ from click import echo # To reduce redundancy
 def main():
     
     click.echo("""
-WELCOME TO SKILLSYNC
 \nOPTIONS:
 1. Login
 2. View Workshops
@@ -20,5 +19,20 @@ WELCOME TO SKILLSYNC
     choice = click.prompt(">", type=int)
     echo(f"You have chosen {choice}.")
     
+    if choice == 1:
+        login()
+    elif choice ==  2:
+        view_workshops()
+    elif choice ==  3: 
+        request_meeting()
+    elif choice == 4:
+        view_bookings()
+    elif choice == 5:
+        cancel_booking()
+    else:
+        echo("Invalid choice, Input should be between [1-5]")
+        main()
+
 if __name__ == "__main__":
+    echo("WELCOME TO SKILLSYNC")
     main()
