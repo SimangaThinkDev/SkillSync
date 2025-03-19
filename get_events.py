@@ -2,6 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google.auth.exceptions import TransportError
 import datetime
+from calendar_1 import initiate_calendar
 
 def get_events(creds):
         
@@ -64,4 +65,6 @@ def print_events(creds):
         print("An Error Occured:", Err)
     except TransportError:
         print("Bad Network, Can't get events!")
-        
+
+if __name__ == "__main__":
+    print_events(initiate_calendar())

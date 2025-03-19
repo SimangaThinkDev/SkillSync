@@ -42,6 +42,7 @@ def clear():
 
 
 
+
 def convert_to_datetime(date= '2025-01-22T10:00:00Z') -> datetime: 
     """
     This function will take in the date string as input and return it as a
@@ -78,6 +79,8 @@ def is_valid_booking_time(start_time):
 def is_conflicting(booking, existing_events):
     b_end, b_start = booking
     # Check if the day is between Monday (0) and Friday (4)
+    if not existing_events:
+        return False
     for event in existing_events:
         e_start, e_end = event
         if b_start < e_end and b_end > e_start:

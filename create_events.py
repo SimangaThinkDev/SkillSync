@@ -12,7 +12,7 @@ def create_event(creds, existing):
     # let's create our timezone variable
     timezone = "Africa/Johannesburg"
     summary = input("Specify the topic that will be handled during this session: ")
-    location = input("jhb or cpt?: ")
+    location = "132 Jan Smuts Avenue"
     description = input("Mentor Session or Peer Session?: ")
     print("Please specify the booking time below: \n")
     year = int(input("Please enter the year you're booking in: "))
@@ -82,7 +82,7 @@ def create_event(creds, existing):
         booking = (start, end)
         # Calling two modules into action, the first module(inner -> convert_to_datetime), takes our string of the date and formats it
         # so the second function(outer -> is_valid_booking_time) can deal with comparing the date if it's during a valid time
-        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(end)):
+        if is_valid_booking_time(convert_to_datetime(start)) and is_valid_booking_time(convert_to_datetime(end)) and is_conflicting(booking, existing):
             event = service.events().insert(calendarId = "primary", body = event).execute()
             print(f"Session created: {event.get('htmlLink')}")
         
