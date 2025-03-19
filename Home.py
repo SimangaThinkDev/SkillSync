@@ -14,7 +14,7 @@ from click import echo # To reduce redundancy
 @click.command()
 def main():
     
-    click.echo("""
+    echo("""
 \nOPTIONS:
 1. Login
 2. View Workshops
