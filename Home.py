@@ -1,5 +1,12 @@
 # Hello, And Welcome to the CPU of my code
 
+# Apps
+from login import login
+from view_workshops import view_workshops
+from request_meeting import request_meeting
+from view_bookings import view_bookings
+from cancel_booking import cancel_booking
+
 import click
 from click import echo # To reduce redundancy
 
